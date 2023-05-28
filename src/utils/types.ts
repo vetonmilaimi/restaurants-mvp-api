@@ -1,5 +1,15 @@
-import { Secret, SignOptions } from "jsonwebtoken";
-import { UserRoles } from "../utils/constants";
+import { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
+import { UserRoles } from "./constants";
+import { UpdateResult, DeleteResult } from "mongodb";
+import { Document } from "mongoose";
+
+declare global {
+  namespace Express {
+    export interface Request {
+      decoded: number | undefined;
+    }
+  }
+}
 
 export interface JWTSign {
   payload: string | Buffer | object;
@@ -31,15 +41,35 @@ export interface GlobalError {
 }
 
 export interface IUser {
-  username: string, 
-  email: string,
-  password: string,
-  first_name: string,
-  last_name: string,
-  role: UserRoles
+  _id?: string;
+  username: string;
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  role: UserRoles;
+}
+
+export interface CompleteUser extends IUser {
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 export interface LoginRequests {
-  email: string,
-  password: string
+  email: string;
+  password: string;
+}
+
+export interface IControllerClass {
+  getAll: <T>() => Promise<Document<T>[]>;
+  getLatestUpdates: <T>() => Promise<Document<T>[]>;
+  getOneById: <T>(_id: string) => Promise<Document<T> | null>;
+  insert: (params: any) => Promise<string>;
+  update: (_id: string, params: any) => Promise<UpdateResult>;
+  delete: (_id: string) => Promise<DeleteResult>;
+}
+
+export interface AuthJWT extends JwtPayload {
+  email: string;
+  _id: number;
 }

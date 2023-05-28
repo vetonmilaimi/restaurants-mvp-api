@@ -8,7 +8,7 @@ export class BcryptService {
   }
 
   public async compare(input: Buffer | string, encrypted: string) {
-    return await bcrypt.compare(input, encrypted)
+    return bcrypt.compareSync(input, encrypted)
   }
 }
 

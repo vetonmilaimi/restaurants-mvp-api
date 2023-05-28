@@ -1,27 +1,33 @@
-import userModel from "../models/user.model";
+import userModel from "../models/DB/user.model";
 
 export class UserService {
-  async get(params: Object = {}, complete: boolean = false) {
+  public async emailExists(email: string) {
+    return await userModel.findOne({ email }).lean().exec();
+  }
+
+  public async get(params: Object = {}, complete: boolean = false) {
     return await userModel
       .find(params, complete ? {} : { password: false })
+      .lean()
       .exec();
   }
 
-  async create(params: Object = {}) {
+  public async create(params: Object = {}) {
     return await userModel.create(params);
   }
 
-  async getOne(params: Object, complete: boolean = false) {
+  public async getOne(params: Object, complete: boolean = false) {
     return await userModel
       .findOne(params, complete ? {} : { password: false })
+      .lean()
       .exec();
   }
 
-  async update(_id: string, params: Object) {
+  public async update(_id: string, params: Object) {
     return await userModel.updateOne({ _id }, params).exec();
   }
 
-  async delete(_id: string) {
+  public async delete(_id: string) {
     return await userModel.deleteOne({ _id }).exec();
   }
 }

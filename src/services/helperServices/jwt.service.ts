@@ -1,5 +1,5 @@
 import jwt, { Secret } from "jsonwebtoken"
-import { JWTSign } from "../lib/types"
+import { JWTSign } from "../../utils/types"
 
 export class JwtService {
   public sign(config: JWTSign) {

@@ -1,16 +1,16 @@
-import { JWTSign, LoginRequests } from "../lib/types";
-import { BcryptService } from "../services/Bcrypt.service";
-import { HelperService } from "../services/Helper.service";
-import { JwtService } from "../services/Jwt.service";
-import { UserService } from "../services/User.service";
+import { JWTSign, LoginRequests } from "../utils/types";
+import { BcryptService } from "../services/helperServices/bcrypt.service";
+import { HelperService } from "../services/helperServices/helper.service";
+import { JwtService } from "../services/helperServices/jwt.service";
+import { UserService } from "../services/user.service";
 import { accessTokenKey } from "../utils/constants";
 import { IncorrectPassword, UserNotFound } from "../utils/errors";
 
 export class AuthController {
   private helperService: HelperService;
   private userService: UserService;
-  private bcrypt: BcryptService;
   private jwt: JwtService;
+  private bcrypt: BcryptService;
 
   constructor() {
     this.userService = new UserService();
@@ -22,13 +22,13 @@ export class AuthController {
   async login(params: LoginRequests) {
     const { email, password } = params;
 
-    const existUser = await this.userService.getOne({ email }, true);
+    const existUser = await this.userService.emailExists(email);
 
     if (!existUser) {
       throw new UserNotFound();
     }
 
-    if (!this.bcrypt.compare(password, existUser.password)) {
+    if (!(await this.bcrypt.compare(password, existUser.password))) {
       throw new IncorrectPassword();
     }
 
@@ -48,6 +48,8 @@ export class AuthController {
       role: existUser.role,
       _id: existUser._id,
     };
+
+    return user;
   }
 }
 

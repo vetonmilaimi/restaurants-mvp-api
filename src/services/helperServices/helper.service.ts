@@ -1,4 +1,4 @@
-import { GlobalError } from "../lib/types";
+import { GlobalError } from "../../utils/types";
 
 export class HelperService {
   public static formatError(err: GlobalError) {
