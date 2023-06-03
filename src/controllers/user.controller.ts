@@ -31,7 +31,7 @@ export class UserController {
       role,
     });
 
-    return user._id;
+    return user;
   }
 
   async delete(_id: string) {

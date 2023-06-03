@@ -1,4 +1,5 @@
 export interface IRestaurant {
+  _id?: string;
   name: string;
   city: string;
   address: string;
@@ -8,4 +9,9 @@ export interface IRestaurant {
     color_1: string;
     color_2: string;
   };
+}
+
+export interface IRestaurantComplete extends IRestaurant {
+  updatedAt: Date;
+  createdAt: Date;
 }

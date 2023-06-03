@@ -73,3 +73,12 @@ export interface AuthJWT extends JwtPayload {
   email: string;
   _id: number;
 }
+
+export interface UserSession {
+  entityId: string;
+  user_id: number;
+  access_token: string;
+  refresh_token: string;
+  access_token_exp: number;
+  refresh_token_exp: number;
+}

@@ -42,6 +42,8 @@ export class AuthController {
 
     const accessToken = this.jwt.sign(jwtConfig);
 
+    // const session = await this.userService.saveSession(existUser._id);
+
     const user = {
       token: accessToken,
       email: existUser.email,

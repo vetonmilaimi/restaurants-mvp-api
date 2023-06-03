@@ -17,7 +17,7 @@ router.get(
 
 router.get(
   "/:_id",
-  exceptionHandler(async (req: Request<IUser>, res: Response) => {
+  exceptionHandler(async (req: Request<IUser, {}, {}>, res: Response) => {
     const result = await userController.getOneById(req.params._id as string);
     res.json(result);
   })
@@ -25,7 +25,7 @@ router.get(
 
 router.delete(
   "/delete/:_id",
-  exceptionHandler(async (req: Request<IUser>, res: Response) => {
+  exceptionHandler(async (req: Request<IUser, {}, {}>, res: Response) => {
     const result = await userController.delete(req.params._id as string);
     res.json(result);
   })

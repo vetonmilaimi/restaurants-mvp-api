@@ -62,4 +62,13 @@ export class RestaurantUniqueIdExists extends ErrorWithStatusCode {
   }
 }
 
+export class InvalidTimeString extends ErrorWithStatusCode {
+  constructor() {
+    super();
+    this.name = "invalid-time-string";
+    this.message = "Invalid time string";
+    this.statusCode = 400;
+  }
+}
+
 RestaurantUniqueIdExists;

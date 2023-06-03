@@ -17,7 +17,7 @@ router.get(
 
 router.post(
   "/",
-  exceptionHandler(async (req: Request<IRestaurant>, res: Response) => {
+  exceptionHandler(async (req: Request<{}, {}, IRestaurant>, res: Response) => {
     const result = await restaurantController.insert(req.body);
     res.json(result);
   })
@@ -26,8 +26,8 @@ router.post(
 router.delete(
   "/:_id",
   exceptionHandler(
-    async (req: Request<IRestaurant & { _id: string }>, res: Response) => {
-      const result = await restaurantController.delete(req.params._id);
+    async (req: Request<IRestaurant, {}, {}>, res: Response) => {
+      const result = await restaurantController.delete(req.params._id as string);
       res.json(result);
     }
   )
@@ -36,9 +36,9 @@ router.delete(
 router.put(
   "/:_id",
   exceptionHandler(
-    async (req: Request<IRestaurant & { _id: string }>, res: Response) => {
+    async (req: Request<IRestaurant, {}, IRestaurant>, res: Response) => {
       const result = await restaurantController.update(
-        req.params._id,
+        req.params._id as string,
         req.body
       );
       res.json(result);

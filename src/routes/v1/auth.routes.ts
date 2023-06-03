@@ -8,7 +8,7 @@ const router = Router();
 
 router.post(
   "/register",
-  exceptionHandler(async (req: Request<IUser>, res: Response) => {
+  exceptionHandler(async (req: Request<{}, {}, IUser>, res: Response) => {
     const result = await userController.insert(req.body);
     res.json(result);
   })
@@ -16,7 +16,7 @@ router.post(
 
 router.post(
   "/login",
-  exceptionHandler(async (req: Request<IUser>, res: Response) => {
+  exceptionHandler(async (req: Request<{}, {}, IUser>, res: Response) => {
     const result = await authController.login(req.body);
     res.json(result);
   })
