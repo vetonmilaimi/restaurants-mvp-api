@@ -1,4 +1,4 @@
-import { JWTSign, LoginRequests } from "../utils/types";
+import { JWTSign, LoginRequests, UserSession } from "../utils/types";
 import { BcryptService } from "../services/helperServices/bcrypt.service";
 import { HelperService } from "../services/helperServices/helper.service";
 import { JwtService } from "../services/helperServices/jwt.service";
@@ -32,26 +32,28 @@ export class AuthController {
       throw new IncorrectPassword();
     }
 
-    const jwtConfig: JWTSign = {
-      payload: {
-        email: existUser.email,
-        _id: existUser._id,
-      },
-      secretOrPrivateKey: accessTokenKey,
-    };
+    // const jwtConfig: JWTSign = {
+    //   payload: {
+    //     email: existUser.email,
+    //     _id: existUser._id,
+    //   },
+    //   secretOrPrivateKey: accessTokenKey,
+    // };
 
-    const accessToken = this.jwt.sign(jwtConfig);
+    // const accessToken = this.jwt.sign(jwtConfig);
 
-    // const session = await this.userService.saveSession(existUser._id);
+    const session = await this.userService.saveSession(`${existUser._id}`);
 
     const user = {
-      token: accessToken,
-      email: existUser.email,
-      role: existUser.role,
-      _id: existUser._id,
+      session,
     };
 
     return user;
+  }
+
+  async logout(session: UserSession) {
+    await this.userService.deleteSession(session.entityId);
+    return true;
   }
 }
 

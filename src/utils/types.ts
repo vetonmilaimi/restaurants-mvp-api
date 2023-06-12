@@ -6,6 +6,7 @@ import { Document } from "mongoose";
 declare global {
   namespace Express {
     export interface Request {
+      session: UserSession;
       decoded: number | undefined;
     }
   }
@@ -76,7 +77,7 @@ export interface AuthJWT extends JwtPayload {
 
 export interface UserSession {
   entityId: string;
-  user_id: number;
+  user_id: string;
   access_token: string;
   refresh_token: string;
   access_token_exp: number;

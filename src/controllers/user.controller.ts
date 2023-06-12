@@ -1,15 +1,15 @@
-import { IControllerClass, IUser } from "../utils/types";
+import { IUser, UserSession } from "../utils/types";
 import BcryptService from "../services/helperServices/bcrypt.service";
-import { HelperService } from "../services/helperServices/helper.service";
+// import { HelperService } from "../services/helperServices/helper.service";
 import { UserService } from "../services/user.service";
-import { EmailExists } from "../utils/errors";
+import { EmailExists, UserNotFound } from "../utils/errors";
 
 export class UserController {
-  private helperService: HelperService;
+  // private helperService: HelperService;
   private userService: UserService;
 
   constructor() {
-    this.helperService = new HelperService();
+    // this.helperService = new HelperService();
     this.userService = new UserService();
   }
 
@@ -34,16 +34,27 @@ export class UserController {
     return user;
   }
 
-  async delete(_id: string) {
+  public async delete(_id: string) {
     return await this.userService.delete(_id);
   }
 
-  async getAll() {
+  public async getAll() {
     return await this.userService.get();
   }
 
-  async getOneById(_id: string) {
+  public async getOneById(_id: string) {
     return await this.userService.getOne({ _id });
+  }
+
+  public async regenerateTokens(session: UserSession) {
+    const user = await this.getOneById(session.user_id);
+    if (!user) {
+      throw new UserNotFound();
+    }
+
+    const newSession = await this.userService.saveSession(session.user_id);
+    this.userService.deleteSession(session.entityId);
+    return newSession;
   }
 }
 

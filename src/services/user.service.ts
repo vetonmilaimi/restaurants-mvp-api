@@ -53,6 +53,20 @@ export class UserService {
       refresh_token_exp: this.tokenService.generateExpTime("2d"),
     });
   }
+
+  public async findSession(access_token: string) {
+    const repo = await this.redisService.fetchRepo(sessionSchema);
+    return await repo
+      .search()
+      .where("access_token")
+      .equalTo(access_token)
+      .first();
+  }
+
+  public async deleteSession(entityId: string) {
+    const repo = await this.redisService.fetchRepo(sessionSchema);
+    await repo.remove(entityId);
+  }
 }
 
 export default new UserService();

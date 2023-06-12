@@ -11,6 +11,6 @@ const sessionSchema = new Schema(Session, {
   refresh_token_exp: { type: "number" },
 });
 
-// Redis.createIndex(sessionSchema);
+Redis.createIndex(sessionSchema);
 
 export default sessionSchema;
