@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { UserRoles } from "../../utils/constants";
-import { IUser } from "../../utils/types";
+import { UserModel } from "../../utils/types";
 
 const schema: Schema = new Schema(
   {
@@ -22,5 +22,5 @@ const schema: Schema = new Schema(
   }
 );
 
-const User = model<IUser>("User", schema);
+const User = model<UserModel>("User", schema);
 export default User;

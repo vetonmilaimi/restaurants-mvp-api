@@ -53,6 +53,33 @@ export class TokenNotExists extends ErrorWithStatusCode {
   }
 }
 
+export class ExpiredAccessToken extends ErrorWithStatusCode {
+  constructor() {
+    super();
+    this.name = "access-token-expired";
+    this.message = "Access Token has Expired";
+    this.statusCode = 401;
+  }
+}
+
+export class InvalidRefreshToken extends ErrorWithStatusCode {
+  constructor() {
+    super();
+    this.name = "invalid-refresh-token";
+    this.message = "Refresh Token is not valid";
+    this.statusCode = 401;
+  }
+}
+
+export class ExpiredRefreshToken extends ErrorWithStatusCode {
+  constructor() {
+    super();
+    this.name = "expired-refresh-token";
+    this.message = "Refresh token has Expired";
+    this.statusCode = 401;
+  }
+}
+
 export class RestaurantUniqueIdExists extends ErrorWithStatusCode {
   constructor() {
     super();

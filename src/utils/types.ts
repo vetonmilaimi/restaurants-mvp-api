@@ -41,7 +41,7 @@ export interface GlobalError {
   name: string;
 }
 
-export interface IUser {
+export interface UserModel {
   _id?: string;
   username: string;
   email: string;
@@ -51,7 +51,9 @@ export interface IUser {
   role: UserRoles;
 }
 
-export interface CompleteUser extends IUser {
+export interface UserRequest extends Omit<UserModel, "id"> {}
+
+export interface CompleteUser extends UserModel {
   updatedAt: Date;
   createdAt: Date;
 }

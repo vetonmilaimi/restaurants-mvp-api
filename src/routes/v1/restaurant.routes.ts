@@ -5,7 +5,7 @@ import restaurantController from "../../controllers/restaurant.controller";
 import { IRestaurant } from "../../utils/restaurantTypes";
 
 const router = Router();
-router.use(authMiddleware.validateToken);
+// router.use(authMiddleware.validateToken);
 
 router.get(
   "/",
