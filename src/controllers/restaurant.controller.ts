@@ -4,11 +4,11 @@ import { RestaurantUniqueIdExists } from "../utils/errors";
 import { IRestaurant } from "../utils/restaurantTypes";
 
 export class RestaurantController {
-  private helperService: HelperService;
+  // private helperService: HelperService;
   private restaurantService: RestaurantService;
 
   constructor() {
-    this.helperService = new HelperService();
+    // this.helperService = new HelperService();
     this.restaurantService = new RestaurantService();
   }
 

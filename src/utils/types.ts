@@ -63,14 +63,14 @@ export interface LoginRequests {
   password: string;
 }
 
-export interface IControllerClass {
-  getAll: <T>() => Promise<Document<T>[]>;
-  getLatestUpdates: <T>() => Promise<Document<T>[]>;
-  getOneById: <T>(_id: string) => Promise<Document<T> | null>;
-  insert: (params: any) => Promise<string>;
-  update: (_id: string, params: any) => Promise<UpdateResult>;
-  delete: (_id: string) => Promise<DeleteResult>;
-}
+// export interface IControllerClass {
+//   getAll: <T>() => Promise<Document<T>[]>;
+//   getLatestUpdates: <T>() => Promise<Document<T>[]>;
+//   getOneById: <T>(_id: string) => Promise<Document<T> | null>;
+//   insert: (params: any) => Promise<Document<T>>;
+//   update: (_id: string, params: any) => Promise<UpdateResult>;
+//   delete: (_id: string) => Promise<DeleteResult>;
+// }
 
 export interface AuthJWT extends JwtPayload {
   email: string;

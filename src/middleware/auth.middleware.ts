@@ -28,7 +28,6 @@ export class AuthMiddleware {
   ) => {
     const access_token = req.headers.access_token as string;
     const session = await this.userService.findSession(access_token);
-
     if (!session) {
       throw new InvalidToken();
     }
@@ -40,7 +39,6 @@ export class AuthMiddleware {
     if (this.tokenService.didTokenExpire(userSession.access_token_exp)) {
       throw new ExpiredAccessToken();
     }
-
     req.session = userSession;
     next();
   };
@@ -69,7 +67,7 @@ export class AuthMiddleware {
     if (this.tokenService.didTokenExpire(userSession.refresh_token_exp)) {
       throw new ExpiredRefreshToken();
     }
-
+    req.session = userSession;
     next();
   };
   // protected getTokenFromHeader = (req: Request) => {

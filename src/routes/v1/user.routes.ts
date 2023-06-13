@@ -7,11 +7,30 @@ import validator from "../../middleware/routeValidator.middleware";
 import ValidationSchemas from "../../utils/ValidationSchemas";
 
 const router = Router();
-// router.use(authMiddleware.validateToken);
+
+router.delete(
+  "/delete/:_id",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
+  exceptionHandler(async (req: Request<UserModel, {}, {}>, res: Response) => {
+    const result = await userController.delete(req.params._id as string);
+    res.json(result);
+  })
+);
+
+router.get(
+  "/logout",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
+  exceptionHandler(async (req: Request, res: Response) => {
+    const result = await userController.logout(req.session);
+    res.json(result);
+  })
+);
 
 router.get(
   "/",
-  // validator.headers(ValidationSchemas.accessToken),
+  validator.headers(ValidationSchemas.accessToken),
   authMiddleware.validateAccessToken,
   exceptionHandler(async (_req: Request, res: Response) => {
     const result = await userController.getAll();
@@ -21,16 +40,10 @@ router.get(
 
 router.get(
   "/:_id",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
   exceptionHandler(async (req: Request<UserModel, {}, {}>, res: Response) => {
     const result = await userController.getOneById(req.params._id as string);
-    res.json(result);
-  })
-);
-
-router.delete(
-  "/delete/:_id",
-  exceptionHandler(async (req: Request<UserModel, {}, {}>, res: Response) => {
-    const result = await userController.delete(req.params._id as string);
     res.json(result);
   })
 );

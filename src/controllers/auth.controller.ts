@@ -1,20 +1,20 @@
-import { JWTSign, LoginRequests, UserSession } from "../utils/types";
+import { LoginRequests, UserSession } from "../utils/types";
 import { BcryptService } from "../services/helperServices/bcrypt.service";
-import { HelperService } from "../services/helperServices/helper.service";
+// import { HelperService } from "../services/helperServices/helper.service";
 import { JwtService } from "../services/helperServices/jwt.service";
 import { UserService } from "../services/user.service";
-import { accessTokenKey } from "../utils/constants";
+// import { accessTokenKey } from "../utils/constants";
 import { IncorrectPassword, UserNotFound } from "../utils/errors";
 
 export class AuthController {
-  private helperService: HelperService;
+  // private helperService: HelperService;
   private userService: UserService;
   private jwt: JwtService;
   private bcrypt: BcryptService;
 
   constructor() {
     this.userService = new UserService();
-    this.helperService = new HelperService();
+    // this.helperService = new HelperService();
     this.bcrypt = new BcryptService();
     this.jwt = new JwtService();
   }

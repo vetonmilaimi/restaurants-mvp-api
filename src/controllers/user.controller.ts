@@ -1,4 +1,9 @@
-import { UserModel, UserRequest, UserSession } from "../utils/types";
+import {
+  // IControllerClass,
+  // UserModel,
+  UserRequest,
+  UserSession,
+} from "../utils/types";
 import BcryptService from "../services/helperServices/bcrypt.service";
 // import { HelperService } from "../services/helperServices/helper.service";
 import { UserService } from "../services/user.service";
@@ -39,7 +44,7 @@ export class UserController {
   }
 
   public async getAll() {
-    return await this.userService.get();
+    return await this.userService.get({});
   }
 
   public async getOneById(_id: string) {
@@ -55,6 +60,11 @@ export class UserController {
     const newSession = await this.userService.saveSession(session.user_id);
     this.userService.deleteSession(session.entityId);
     return newSession;
+  }
+
+  public async logout(session: UserSession) {
+    await this.userService.deleteSession(session.entityId);
+    return true;
   }
 }
 

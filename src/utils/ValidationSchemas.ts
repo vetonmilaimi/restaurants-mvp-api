@@ -26,7 +26,7 @@ class ValidationSchemas {
   });
 
   static accessToken = Joi.object({
-    access_token: Joi.string().required(),
+    access_token: Joi.string(),
   });
 }
 
