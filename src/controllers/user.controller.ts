@@ -1,21 +1,25 @@
 import {
+  ChangeUserDetailsRequest,
   // IControllerClass,
   // UserModel,
   UserRequest,
   UserSession,
 } from "../utils/types";
-import BcryptService from "../services/helperServices/bcrypt.service";
+import { BcryptService } from "../services/helperServices/bcrypt.service";
 // import { HelperService } from "../services/helperServices/helper.service";
 import { UserService } from "../services/user.service";
 import { EmailExists, UserNotFound } from "../utils/errors";
+import { Request } from "express";
 
 export class UserController {
   // private helperService: HelperService;
   private userService: UserService;
+  private bcryptService: BcryptService;
 
   constructor() {
     // this.helperService = new HelperService();
     this.userService = new UserService();
+    this.bcryptService = new BcryptService();
   }
 
   public async insert(params: UserRequest) {
@@ -25,7 +29,7 @@ export class UserController {
       throw new EmailExists();
     }
 
-    const hashedPassword = await BcryptService.hash(password);
+    const hashedPassword = await this.bcryptService.hash(password);
 
     const user = await this.userService.create({
       username,
@@ -65,6 +69,27 @@ export class UserController {
   public async logout(session: UserSession) {
     await this.userService.deleteSession(session.entityId);
     return true;
+  }
+
+  public async changePassword(req: Request<{}, {}, { password: string }>) {
+    const hashedPassword = await this.bcryptService.hash(req.body.password);
+    await this.userService.updatePasswordById(
+      req.session.user_id,
+      hashedPassword
+    );
+    return true;
+  }
+
+  public async changeUserDetails(
+    req: Request<{}, {}, ChangeUserDetailsRequest>
+  ) {
+    const { first_name, last_name, email } = req.body;
+
+    await this.userService.updateUserDetails(req.session.user_id, {
+      first_name,
+      last_name,
+      email,
+    });
   }
 }
 

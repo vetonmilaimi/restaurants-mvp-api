@@ -53,6 +53,12 @@ export interface UserModel {
 
 export interface UserRequest extends Omit<UserModel, "id"> {}
 
+export interface ChangeUserDetailsRequest {
+  first_name: string, 
+  last_name: string,
+  email: string,
+}
+
 export interface CompleteUser extends UserModel {
   updatedAt: Date;
   createdAt: Date;

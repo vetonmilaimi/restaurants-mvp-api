@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { exceptionHandler } from "../../utils/helpers/exceptionHandler";
 import userController from "../../controllers/user.controller";
-import { UserModel } from "../../utils/types";
+import { ChangeUserDetailsRequest, UserModel } from "../../utils/types";
 import authMiddleware from "../../middleware/auth.middleware";
 import validator from "../../middleware/routeValidator.middleware";
 import ValidationSchemas from "../../utils/ValidationSchemas";
@@ -26,6 +26,32 @@ router.get(
     const result = await userController.logout(req.session);
     res.json(result);
   })
+);
+
+router.post(
+  "/change-password",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
+  validator.body(ValidationSchemas.changePassword),
+  exceptionHandler(
+    async (req: Request<{}, {}, { password: string }>, res: Response) => {
+      const result = await userController.changePassword(req);
+      res.json(result);
+    }
+  )
+);
+
+router.post(
+  "/change-personal-details",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
+  validator.body(ValidationSchemas.changeUserDetails),
+  exceptionHandler(
+    async (req: Request<{}, {}, ChangeUserDetailsRequest>, res: Response) => {
+      const result = await userController.changeUserDetails(req);
+      res.json(result);
+    }
+  )
 );
 
 router.get(

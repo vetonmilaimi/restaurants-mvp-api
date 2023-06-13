@@ -3,6 +3,7 @@ import userModel from "../models/DB/user.model";
 import sessionSchema from "../models/Redis/session.model";
 import Redis from "./helperServices/redis.service";
 import TokenService from "./helperServices/token.service";
+import { ChangeUserDetailsRequest } from "../utils/types";
 
 export class UserService {
   private redisService: Redis;
@@ -66,6 +67,17 @@ export class UserService {
   public async deleteSession(entityId: string) {
     const repo = await this.redisService.fetchRepo(sessionSchema);
     await repo.remove(entityId);
+  }
+
+  public async updatePasswordById(_id: string, password: string) {
+    return await userModel.updateOne({ _id }, { password });
+  }
+
+  public async updateUserDetails(
+    _id: string,
+    params: ChangeUserDetailsRequest
+  ) {
+    return await userModel.updateOne({ _id }, params);
   }
 }
 

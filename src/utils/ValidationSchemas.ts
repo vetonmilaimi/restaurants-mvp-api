@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { PASSWORD_REGEX } from "./constants";
 
 class ValidationSchemas {
   static login = Joi.object({
@@ -10,7 +11,7 @@ class ValidationSchemas {
     first_name: Joi.string().required(),
     last_name: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    password: Joi.string().regex(PASSWORD_REGEX).required(),
     username: Joi.string().lowercase().required(),
   });
 
@@ -18,6 +19,10 @@ class ValidationSchemas {
     first_name: Joi.string().required(),
     last_name: Joi.string().required(),
     email: Joi.string().email().required(),
+  });
+
+  static changePassword = Joi.object({
+    password: Joi.string().regex(PASSWORD_REGEX).required(),
   });
 
   static token = Joi.object({

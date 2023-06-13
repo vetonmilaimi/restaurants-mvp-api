@@ -7,6 +7,9 @@ export const accessTokenKey =
 export const accessTokenKeyExp = process.env.JWT_KEY_ACCESS_TOKEN_EXP || "5d";
 export const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
 
+export const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?\.])[A-Za-z\d#$@!%&*?\.]{8,30}$/;
+
 export enum UserRoles {
   admin = "ADMIN",
   user = "USER",
