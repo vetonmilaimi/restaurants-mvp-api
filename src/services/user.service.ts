@@ -79,6 +79,10 @@ export class UserService {
   ) {
     return await userModel.updateOne({ _id }, params);
   }
+
+  public async updateUserProfileImage(_id: string, profileImage: string) {
+    return await userModel.updateOne({ _id }, { profileImage: profileImage });
+  }
 }
 
 export default new UserService();

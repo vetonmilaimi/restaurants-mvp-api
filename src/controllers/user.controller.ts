@@ -10,6 +10,7 @@ import { BcryptService } from "../services/helperServices/bcrypt.service";
 import { UserService } from "../services/user.service";
 import { EmailExists, UserNotFound } from "../utils/errors";
 import { Request } from "express";
+import { DEFAULT_IMAGES } from "../utils/constants";
 
 export class UserController {
   // private helperService: HelperService;
@@ -80,12 +81,21 @@ export class UserController {
     return true;
   }
 
+  public async changeProfileImage(req: Request) {
+    const profileImage = req.file?.filename ?? DEFAULT_IMAGES.USER_AVATAR;
+    await this.userService.updateUserProfileImage(
+      req.session.user_id,
+      profileImage
+    );
+    return profileImage;
+  }
+
   public async changeUserDetails(
     req: Request<{}, {}, ChangeUserDetailsRequest>
   ) {
     const { first_name, last_name, email } = req.body;
 
-    await this.userService.updateUserDetails(req.session.user_id, {
+    return await this.userService.updateUserDetails(req.session.user_id, {
       first_name,
       last_name,
       email,

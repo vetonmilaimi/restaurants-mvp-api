@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { UserRoles } from "../../utils/constants";
+import { DEFAULT_IMAGES, UserRoles } from "../../utils/constants";
 import { UserModel } from "../../utils/types";
 
 const schema: Schema = new Schema(
@@ -9,6 +9,11 @@ const schema: Schema = new Schema(
     password: { type: String, required: true },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
+    profileImage: {
+      type: String,
+      required: true,
+      default: DEFAULT_IMAGES.USER_AVATAR,
+    },
     role: {
       type: String,
       enum: Object.values(UserRoles),

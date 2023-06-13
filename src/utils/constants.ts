@@ -15,3 +15,6 @@ export enum UserRoles {
   user = "USER",
   guest = "GUEST",
 }
+export enum DEFAULT_IMAGES {
+  USER_AVATAR = "default-user-avatar.png",
+}

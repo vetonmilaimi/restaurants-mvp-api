@@ -5,6 +5,7 @@ import { ChangeUserDetailsRequest, UserModel } from "../../utils/types";
 import authMiddleware from "../../middleware/auth.middleware";
 import validator from "../../middleware/routeValidator.middleware";
 import ValidationSchemas from "../../utils/ValidationSchemas";
+import multipartService from "../../services/helperServices/multipart.service";
 
 const router = Router();
 
@@ -39,6 +40,17 @@ router.post(
       res.json(result);
     }
   )
+);
+
+router.post(
+  "/change-profile-image",
+  validator.headers(ValidationSchemas.accessToken),
+  authMiddleware.validateAccessToken,
+  multipartService.upload().single("avatar"),
+  exceptionHandler(async (req: Request, res: Response) => {
+    const result = await userController.changeProfileImage(req);
+    res.json(result);
+  })
 );
 
 router.post(
