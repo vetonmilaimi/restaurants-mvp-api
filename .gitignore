@@ -9,6 +9,7 @@ yarn-error.log*
 
 # Ignore uploads
 public/uploads
+public/images/avatar*
 
 # Runtime data
 pids
